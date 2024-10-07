@@ -1,13 +1,55 @@
-import { Controller, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  Put,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { LoginDTO } from './dtos/login-dto';
+import { RefreshTokenDTO } from './dtos/refresh-token-dto';
+import { BadCredentials } from './errors/bad-credentials';
+import { InvalidRefreshToken } from './errors/invalid-refresh-token';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post("login")
-  public login(){}
-  
-  @Put("refresh")
-  public refresh(){}
+  @HttpCode(200)
+  @Post('login')
+  public async login(@Body() { email, password }: LoginDTO) {
+    try {
+      const { accessToken, refreshToken } = await this.authService.login(
+        email,
+        password,
+      );
+      return {
+        accessToken,
+        refreshToken,
+      };
+    } catch (error) {
+      if (error instanceof BadCredentials) {
+        throw new UnauthorizedException({
+          code: error.code,
+          message: error.message,
+        });
+      }
+      throw error;
+    }
+  }
+
+  @Put('refresh')
+  public refresh(@Body() { token }: RefreshTokenDTO) {
+    try {
+    } catch (error) {
+      if (error instanceof InvalidRefreshToken) {
+        throw new UnauthorizedException({
+          code: error.code,
+          message: error.message,
+        });
+      }
+      throw error;
+    }
+  }
 }
