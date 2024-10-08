@@ -9,12 +9,11 @@ const EnvSchema = z.object({
 
 type EnvType = z.infer<typeof EnvSchema>;
 
-@Global()
 @Injectable()
-export class EnvironmentProvider implements OnModuleInit {
+export class EnvironmentProvider {
   private variables: EnvType = {};
 
-  onModuleInit() {
+  constructor() {
     try {
       this.variables = EnvSchema.parse(process.env);
     } catch (error) {

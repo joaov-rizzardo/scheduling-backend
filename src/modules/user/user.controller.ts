@@ -48,6 +48,23 @@ export class UserController {
   }
 
   @UseGuards(UserGuard)
+  @Get("token")
+  public async findByToken(@Req() request: UserRequest) {
+    const user = request.user;
+    return {
+      id: user.id,
+      name: user.name,
+      lastName: user.lastName,
+      role: user.role,
+      email: user.email,
+      phone: user.phone,
+      isEmailVerified: user.isEmailVerified,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+  }
+
+  @UseGuards(UserGuard)
   @Get(':id')
   public async findById(@Param('id') id: string, @Req() request: UserRequest) {
     try {
