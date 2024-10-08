@@ -18,6 +18,16 @@ export class PrismaUserRepository implements UserRepository {
     return this.instanceUser(result);
   }
 
+  async findById(id: string): Promise<User | null> {
+    const result = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!result) return null;
+    return this.instanceUser(result);
+  }
+
   private instanceUser(data: PrismaUser): User {
     return new User({
       name: data.name,
