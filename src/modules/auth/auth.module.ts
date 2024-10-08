@@ -1,17 +1,18 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { PasswordEncrypter } from 'src/common/interfaces/cryptography/password-encrypter';
 import { BcryptPasswordEncrypter } from 'src/libs/bcrypt/bcrypt-password-encrypter';
 import { AuthTokenGenerator } from 'src/common/interfaces/cryptography/auth-token-generator';
 import { JwtAuthTokenGenerator } from 'src/libs/jwt/jwt-auth-token-generator';
-import { EnvironmentProvider } from 'src/providers/environment-provider';
+import { UserGuard } from 'src/guards/user.guard';
 
+@Global()
 @Module({
   controllers: [AuthController],
   providers: [
     AuthService,
-    EnvironmentProvider,
+    UserGuard,
     {
       provide: PasswordEncrypter,
       useClass: BcryptPasswordEncrypter,
@@ -21,5 +22,6 @@ import { EnvironmentProvider } from 'src/providers/environment-provider';
       useClass: JwtAuthTokenGenerator,
     },
   ],
+  exports: [UserGuard, AuthTokenGenerator],
 })
 export class AuthModule {}

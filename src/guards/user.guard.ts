@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { UserUnauthorized } from 'src/common/exceptions/user-unauthorized';
+import { UserUnauthorized } from 'src/common/errors/user-unauthorized';
 import { AuthTokenGenerator } from 'src/common/interfaces/cryptography/auth-token-generator';
 import { UserRepository } from 'src/common/interfaces/repositories/user-repository';
 import { User, UserRole } from 'src/entities/user';

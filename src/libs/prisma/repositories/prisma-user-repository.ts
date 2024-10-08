@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from 'src/common/interfaces/repositories/user-repository';
+import {
+  CreateUserParams,
+  UserRepository,
+} from 'src/common/interfaces/repositories/user-repository';
 import { User } from 'src/entities/user';
 import { PrismaService } from '../prisma.service';
 import { User as PrismaUser } from '@prisma/client';
@@ -7,6 +10,20 @@ import { User as PrismaUser } from '@prisma/client';
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
   constructor(private readonly prisma: PrismaService) {}
+
+  async create(data: CreateUserParams): Promise<User> {
+    const result = await this.prisma.user.create({
+      data: {
+        name: data.name,
+        last_name: data.lastName,
+        email: data.email,
+        password: data.password,
+        phone: data.phone,
+        role: data.role,
+      },
+    });
+    return this.instanceUser(result);
+  }
 
   async findByEmail(email: string): Promise<User | null> {
     const result = await this.prisma.user.findFirst({

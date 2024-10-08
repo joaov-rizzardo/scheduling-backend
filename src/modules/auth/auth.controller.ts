@@ -40,8 +40,12 @@ export class AuthController {
   }
 
   @Put('refresh')
-  public refresh(@Body() { token }: RefreshTokenDTO) {
+  public async refresh(@Body() { token }: RefreshTokenDTO) {
     try {
+      const accessToken = await this.authService.refresh(token);
+      return {
+        accessToken,
+      };
     } catch (error) {
       if (error instanceof InvalidRefreshToken) {
         throw new UnauthorizedException({
