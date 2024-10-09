@@ -38,7 +38,7 @@ export class AuthController {
       throw error;
     }
   }
-
+  @HttpCode(200)
   @Put('refresh')
   public async refresh(@Body() { token }: RefreshTokenDTO) {
     try {

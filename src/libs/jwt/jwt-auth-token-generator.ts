@@ -8,7 +8,8 @@ import {
 import { EnvironmentProvider } from 'src/providers/environment-provider';
 
 const EXPIRES_IN_FIVE_MINUTES = 60 * 5;
-const EXPIRES_IN_ONE_WEEK = 60 * 60 * 24 * 7;
+// const EXPIRES_IN_ONE_WEEK = 60 * 60 * 24 * 7;
+const EXPIRES_IN_ONE_WEEK = 60 * 10;
 
 @Injectable()
 export class JwtAuthTokenGenerator implements AuthTokenGenerator {

@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
+import { InvalidAccessToken } from 'src/common/errors/invalid-access-token';
 import { UserUnauthorized } from 'src/common/errors/user-unauthorized';
 import { AuthTokenGenerator } from 'src/common/interfaces/cryptography/auth-token-generator';
 import { UserRepository } from 'src/common/interfaces/repositories/user-repository';
@@ -28,7 +29,7 @@ export class UserGuard implements CanActivate {
       const request = context.switchToHttp().getRequest<UserRequest>();
       const token = this.extractTokenFromRequest(request);
       if ((await this.authToken.checkAccessToken(token)) === false) {
-        throw new UserUnauthorized();
+        throw new InvalidAccessToken();
       }
       const { userId } = await this.authToken.decodeAccessToken(token);
       const user = await this.userRepository.findById(userId);
@@ -41,7 +42,10 @@ export class UserGuard implements CanActivate {
       request.user = user;
       return true;
     } catch (error) {
-      if (error instanceof UserUnauthorized) {
+      if (
+        error instanceof UserUnauthorized ||
+        error instanceof InvalidAccessToken
+      ) {
         throw new UnauthorizedException({
           code: error.code,
           message: error.message,
