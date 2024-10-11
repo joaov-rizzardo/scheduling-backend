@@ -5,7 +5,6 @@ export interface CreateUserParams {
   lastName: string;
   email: string;
   role: UserRole;
-  phone: string;
   password: string;
 }
 

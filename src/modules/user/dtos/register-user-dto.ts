@@ -31,11 +31,6 @@ export class RegisterUserDTO {
   )
   email: string;
 
-  @IsPhoneNumber(undefined, {
-    message: 'The provided phone is invalid',
-  })
-  phone: string;
-
   @IsStrongPassword(
     {
       minLength: 8,
