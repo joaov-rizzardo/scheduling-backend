@@ -21,6 +21,16 @@ export class PrismaCompanyRepository implements CompanyRepository {
     return this.instanceCompany(result);
   }
 
+  async findById(id: string): Promise<Company | null> {
+    const result = await this.prisma.company.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!result) return null;
+    return this.instanceCompany(result);
+  }
+
   private instanceCompany(data: PrismaCompany): Company {
     return new Company({
       id: data.id,

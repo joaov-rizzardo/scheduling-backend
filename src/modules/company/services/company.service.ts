@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCompanyDTO } from './dtos/create-company-dto';
+import { CreateCompanyDTO } from '../dtos/create-company-dto';
 import { CompanyRepository } from 'src/common/interfaces/repositories/company-repository';
 import { CompanyMemberRepository } from 'src/common/interfaces/repositories/company-member-repository';
 import { CompanyAddressRepository } from 'src/common/interfaces/repositories/company-address-repository';
@@ -24,5 +24,22 @@ export class CompanyService {
       this.addressRepo.create(company.id, args.address),
     ]);
     return company;
+  }
+
+  async findUserCompanies(userId: string) {
+    const data = await this.memberRepo.findByUser(userId);
+    return await Promise.all(
+      data.map(async (member) => {
+        const company = await this.companyRepo.findById(member.companyId);
+        return {
+          company: {
+            id: company.id,
+            name: company.name,
+            brandColor: company.brandColor,
+          },
+          role: member.role,
+        };
+      }),
+    );
   }
 }

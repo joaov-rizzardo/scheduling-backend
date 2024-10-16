@@ -6,4 +6,7 @@ export abstract class CompanyMemberRepository {
     companyId: string,
     role: MemberRole,
   ): CompanyMember | Promise<CompanyMember>;
+  abstract findByUser(
+    userId: string,
+  ): CompanyMember[] | Promise<CompanyMember[]>;
 }

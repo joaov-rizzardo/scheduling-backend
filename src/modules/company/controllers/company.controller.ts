@@ -1,13 +1,14 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { CompanyService } from './company.service';
-import { CreateCompanyDTO } from './dtos/create-company-dto';
+import { CompanyService } from '../services/company.service';
+import { CreateCompanyDTO } from '../dtos/create-company-dto';
 import { UserGuard, UserRequest } from 'src/guards/user.guard';
 
 @Controller('company')
@@ -28,5 +29,11 @@ export class CompanyController {
       createdAt: company.createdAt,
       updatedAt: company.updatedAt,
     };
+  }
+
+  @UseGuards(UserGuard)
+  @Get('authenticated-user')
+  async findUserCompany(@Req() req: UserRequest) {
+    return await this.companyService.findUserCompanies(req.user.id);
   }
 }
