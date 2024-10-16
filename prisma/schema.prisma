@@ -8,16 +8,16 @@ datasource db {
 }
 
 model User {
-  id                String   @id @default(uuid())
+  id                String          @id @default(uuid())
   name              String
   last_name         String
   email             String
   role              UserRole
-  is_email_verified Boolean  @default(false)
-  phone             String?
+  is_email_verified Boolean         @default(false)
   password          String
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
+  CompanyMember     CompanyMember[]
 
   @@index([email])
 }
@@ -25,4 +25,50 @@ model User {
 enum UserRole {
   user
   admin
+}
+
+model Company {
+  id             String          @id @default(uuid())
+  name           String
+  email          String
+  phone          String
+  brand_color    String
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+  CompanyMember  CompanyMember[]
+  CompanyAddress CompanyAddress?
+}
+
+model CompanyMember {
+  user_id    String
+  user       User              @relation(fields: [user_id], references: [id])
+  company_id String
+  company    Company           @relation(fields: [company_id], references: [id])
+  role       CompanyMemberRole
+  created_at DateTime          @default(now())
+  updated_at DateTime          @updatedAt
+
+  @@id([user_id, company_id])
+}
+
+model CompanyAddress {
+  company_id             String   @unique
+  company                Company  @relation(fields: [company_id], references: [id])
+  street                 String
+  city                   String
+  state                  String
+  number                 String
+  postal_code            String
+  country                String
+  additional_information String?
+  created_at             DateTime @default(now())
+  updated_at             DateTime @updatedAt
+
+  @@id([company_id])
+}
+
+enum CompanyMemberRole {
+  owner
+  admin
+  member
 }

@@ -31,7 +31,6 @@ export class UserController {
         lastName: user.lastName,
         role: user.role,
         email: user.email,
-        phone: user.phone,
         isEmailVerified: user.isEmailVerified,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
@@ -48,7 +47,7 @@ export class UserController {
   }
 
   @UseGuards(UserGuard)
-  @Get("token")
+  @Get('token')
   public async findByToken(@Req() request: UserRequest) {
     const user = request.user;
     return {
@@ -57,7 +56,6 @@ export class UserController {
       lastName: user.lastName,
       role: user.role,
       email: user.email,
-      phone: user.phone,
       isEmailVerified: user.isEmailVerified,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
@@ -78,7 +76,6 @@ export class UserController {
         lastName: user.lastName,
         role: user.role,
         email: user.email,
-        phone: user.phone,
         isEmailVerified: user.isEmailVerified,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,

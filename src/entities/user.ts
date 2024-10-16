@@ -7,7 +7,6 @@ interface UserProps {
   email: string;
   isEmailVerified: boolean;
   role: UserRole;
-  phone: string;
   password: string;
   createdAt: Date;
   updatedAt: Date;
@@ -18,7 +17,6 @@ export class User {
   private readonly _name: string;
   private readonly _lastName: string;
   private readonly _email: string;
-  private readonly _phone: string;
   private readonly _role: UserRole;
   private readonly _isEmailVerified: boolean;
   private readonly _password: string;
@@ -32,7 +30,6 @@ export class User {
     this._email = args.email;
     this._isEmailVerified = args.isEmailVerified;
     this._role = args.role;
-    this._phone = args.phone;
     this._password = args.password;
     this._createdAt = args.createdAt;
     this._updatedAt = args.updatedAt;
@@ -60,10 +57,6 @@ export class User {
 
   get isEmailVerified(): boolean {
     return this._isEmailVerified;
-  }
-
-  get phone(): string {
-    return this._phone;
   }
 
   get password(): string {

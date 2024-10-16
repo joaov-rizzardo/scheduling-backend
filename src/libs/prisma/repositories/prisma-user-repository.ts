@@ -54,7 +54,6 @@ export class PrismaUserRepository implements UserRepository {
       createdAt: data.created_at,
       lastName: data.last_name,
       password: data.password,
-      phone: data.phone,
       updatedAt: data.updated_at,
     });
   }
