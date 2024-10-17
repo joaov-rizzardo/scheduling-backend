@@ -32,6 +32,22 @@ export class PrismaCompanyMemberRepository implements CompanyMemberRepository {
     return result.map((member) => this.instanceCompanyMember(member));
   }
 
+  async findMember(
+    userId: string,
+    companyId: string,
+  ): Promise<CompanyMember | null> {
+    const result = await this.prisma.companyMember.findUnique({
+      where: {
+        user_id_company_id: {
+          user_id: userId,
+          company_id: companyId,
+        },
+      },
+    });
+    if (!result) return null;
+    return this.instanceCompanyMember(result);
+  }
+
   private instanceCompanyMember(data: PrismaCompanyMember): CompanyMember {
     return new CompanyMember({
       companyId: data.company_id,

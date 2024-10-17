@@ -9,4 +9,8 @@ export abstract class CompanyMemberRepository {
   abstract findByUser(
     userId: string,
   ): CompanyMember[] | Promise<CompanyMember[]>;
+  abstract findMember(
+    userId: string,
+    companyId: string,
+  ): CompanyMember | null | Promise<CompanyMember | null>;
 }
