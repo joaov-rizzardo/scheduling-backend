@@ -59,6 +59,7 @@ model CompanyAddress {
   state                  String
   number                 String
   postal_code            String
+  neighborhood           String
   country                String
   additional_information String?
   created_at             DateTime @default(now())

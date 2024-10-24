@@ -28,13 +28,11 @@ export class CreateCompanyDTO {
   )
   email: string;
 
-  @IsOptional()
   @IsPhoneNumber(undefined, {
     message: 'The provided phone is invalid',
   })
   phone: string;
 
-  @IsOptional()
   @IsHexColor({
     message: 'The provided color is invalid',
   })

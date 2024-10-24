@@ -6,6 +6,7 @@ interface CompanyAddressProps {
   number: string;
   postalCode: string;
   country: string;
+  neighborhood: string;
   additionalInformation?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -19,6 +20,7 @@ export class CompanyAddress {
   private _number: string;
   private _postalCode: string;
   private _country: string;
+  private _neighborhood: string;
   private _additionalInformation?: string;
   private _createdAt: Date;
   private _updatedAt: Date;
@@ -31,6 +33,7 @@ export class CompanyAddress {
     this._number = args.number;
     this._postalCode = args.postalCode;
     this._country = args.country;
+    this._neighborhood = args.neighborhood;
     this._additionalInformation = args.additionalInformation;
     this._createdAt = args.createdAt;
     this._updatedAt = args.updatedAt;
@@ -62,6 +65,10 @@ export class CompanyAddress {
 
   get country(): string {
     return this._country;
+  }
+
+  get neighborhood(): string {
+    return this._neighborhood;
   }
 
   get additionalInformation(): string | undefined {

@@ -18,6 +18,14 @@ export class CompanyAddressDTO {
   city: string;
 
   @IsNotEmpty({
+    message: 'Please provide the neighborhood field',
+  })
+  @MaxLength(50, {
+    message: 'The neighborhood field length cannot exceed 50 caracters',
+  })
+  neighborhood: string;
+
+  @IsNotEmpty({
     message: 'Please provide the country field',
   })
   @MaxLength(50, {
